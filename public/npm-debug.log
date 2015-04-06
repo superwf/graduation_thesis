@@ -1,0 +1,19 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/wangfan/.nvm/v0.10.36/bin/node',
+1 verbose cli   '/home/wangfan/.nvm/v0.10.36/bin/npm',
+1 verbose cli   'i' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.36
+4 error install Couldn't read dependencies
+5 error package.json ENOENT, open '/home/wangfan/xupengpeng/project/public/package.json'
+5 error package.json This is most likely not a problem with npm itself.
+5 error package.json npm can't find a package.json file in your current directory.
+6 error System Linux 3.16.0-4-amd64
+7 error command "/home/wangfan/.nvm/v0.10.36/bin/node" "/home/wangfan/.nvm/v0.10.36/bin/npm" "i"
+8 error cwd /home/wangfan/xupengpeng/project/public
+9 error node -v v0.10.36
+10 error npm -v 1.4.28
+11 error path /home/wangfan/xupengpeng/project/public/package.json
+12 error code ENOPACKAGEJSON
+13 error errno 34
+14 verbose exit [ 34, true ]

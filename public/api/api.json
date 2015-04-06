@@ -1,0 +1,2035 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "智能社区api接口设计",
+    "version": "1.0.0",
+    "title": "api interface",
+    "termsOfService": "http://api.wangfan.com/",
+    "contact": {
+      "email": "wangfan@wangfan.com"
+    }
+  },
+  "host": "api.wangfan.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "role",
+      "description": "角色"
+    },
+    {
+      "name": "user",
+      "description": "用户"
+    },
+    {
+      "name": "appointment",
+      "description": "预约"
+    },
+    {
+      "name": "terminal",
+      "description": "终端"
+    },
+    {
+      "name": "terminal_record",
+      "description": "终端数据记录"
+    },
+    {
+      "name": "guardian",
+      "description": "监护人(老人家属)"
+    },
+    {
+      "name": "patient",
+      "description": "老人(终端持有者)"
+    },
+    {
+      "name": "patient_record",
+      "description": "患者记录"
+    },
+    {
+      "name": "patient_service",
+      "description": "老年人服务内容"
+    },
+    {
+      "name": "complaint",
+      "description": "投诉记录"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/roles": {
+      "get": {
+        "tags": [
+          "role"
+        ],
+        "summary": "get role list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search role by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "role"
+        ],
+        "summary": "Add a new role",
+        "description": "create role",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "role",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "get": {
+        "tags": [
+          "role"
+        ],
+        "summary": "get role by id",
+        "description": "Returns a single role",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of role",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "role"
+        ],
+        "summary": "update role by id",
+        "description": "update single role",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of role",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "role name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "role"
+        ],
+        "summary": "Delete a role",
+        "description": "delete role",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid role id"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "login",
+            "description": "search user by login",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search user by name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "description": "search user by email",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Add a new user",
+        "description": "create user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user by id",
+        "description": "Returns a single user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/User"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update user by id",
+        "description": "update single user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "user name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/User"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete a user",
+        "description": "delete user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid user id"
+          }
+        }
+      }
+    },
+    "/appointment": {
+      "get": {
+        "tags": [
+          "appointment"
+        ],
+        "summary": "get appointment list",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "client_id",
+            "description": "search appointment by client_id",
+            "required": false,
+            "type": "Integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "search user by type, type is patient or guardian",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "appoint_date",
+            "description": "search appointment by appoint date",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "in": "query",
+            "name": "client_name",
+            "description": "search user by client_name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "appointment"
+        ],
+        "summary": "Add a new appointment",
+        "description": "create appointment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "appointment",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/appointments/{id}": {
+      "get": {
+        "tags": [
+          "appointment"
+        ],
+        "summary": "get appointment by id",
+        "description": "Returns single appointment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Appointment"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "update user by id",
+        "description": "update single user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "user name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/User"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "user not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete a user",
+        "description": "delete user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid user id"
+          }
+        }
+      }
+    },
+    "/terminal": {
+      "get": {
+        "tags": [
+          "terminal"
+        ],
+        "summary": "get terminal list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "login",
+            "description": "search terminal by login",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search terminal by name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "description": "search terminal by email",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "terminal"
+        ],
+        "summary": "Add a new terminal",
+        "description": "create terminal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "terminal",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/terminals/{id}": {
+      "get": {
+        "tags": [
+          "terminal"
+        ],
+        "summary": "get terminal by id",
+        "description": "Returns a single terminal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of terminal",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/User"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "role not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "terminal"
+        ],
+        "summary": "update terminal by id",
+        "description": "update single terminal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of terminal",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "terminal name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/User"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "terminal not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "terminal"
+        ],
+        "summary": "Delete a terminal",
+        "description": "delete terminal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid terminal id"
+          }
+        }
+      }
+    },
+    "/terminal_records": {
+      "get": {
+        "tags": [
+          "terminal_record"
+        ],
+        "summary": "get terminal_record list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search terminal_record by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "terminal_record"
+        ],
+        "summary": "Add a new terminal_record",
+        "description": "create terminal_record",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "terminal_record",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/terminal_records/{id}": {
+      "get": {
+        "tags": [
+          "terminal_record"
+        ],
+        "summary": "get terminal_record by id",
+        "description": "Returns a single terminal_record",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of terminal_record",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "terminal_record not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "terminal_record"
+        ],
+        "summary": "update terminal_record by id",
+        "description": "update single terminal_record",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of terminal_record",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "terminal_record name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "terminal_record not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "terminal_record"
+        ],
+        "summary": "Delete a terminal_record",
+        "description": "delete terminal_record",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid terminal_record id"
+          }
+        }
+      }
+    },
+    "/guardians": {
+      "get": {
+        "tags": [
+          "guardian"
+        ],
+        "summary": "get guardian list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search guardian by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "guardian"
+        ],
+        "summary": "Add a new guardian",
+        "description": "create guardian",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "guardian",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/guardians/{id}": {
+      "get": {
+        "tags": [
+          "guardian"
+        ],
+        "summary": "get guardian by id",
+        "description": "Returns a single guardian",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of guardian",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "guardian not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "guardian"
+        ],
+        "summary": "update guardian by id",
+        "description": "update single guardian",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of guardian",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "guardian name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "guardian not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "guardian"
+        ],
+        "summary": "Delete a guardian",
+        "description": "delete guardian",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid guardian id"
+          }
+        }
+      }
+    },
+    "/patients": {
+      "get": {
+        "tags": [
+          "patient"
+        ],
+        "summary": "get patient list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search patient by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "patient"
+        ],
+        "summary": "Add a new patient",
+        "description": "create patient",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "patient",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/patients/{id}": {
+      "get": {
+        "tags": [
+          "patient"
+        ],
+        "summary": "get patient by id",
+        "description": "Returns a single patient",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of patient",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "patient not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "patient"
+        ],
+        "summary": "update patient by id",
+        "description": "update single patient",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of patient",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "patient name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "patient not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "patient"
+        ],
+        "summary": "Delete a patient",
+        "description": "delete patient",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid patient id"
+          }
+        }
+      }
+    },
+    "/patient_records": {
+      "get": {
+        "tags": [
+          "patient_record"
+        ],
+        "summary": "get patient_record list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search patient_record by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "patient_record"
+        ],
+        "summary": "Add a new patient_record",
+        "description": "create patient_record",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "patient_record",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/patient_records/{id}": {
+      "get": {
+        "tags": [
+          "patient_record"
+        ],
+        "summary": "get patient_record by id",
+        "description": "Returns a single patient_record",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of patient_record",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "patient_record not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "patient_record"
+        ],
+        "summary": "update patient_record by id",
+        "description": "update single patient_record",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of patient_record",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "patient_record name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "patient_record not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "patient_record"
+        ],
+        "summary": "Delete a patient_record",
+        "description": "delete patient_record",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid patient_record id"
+          }
+        }
+      }
+    },
+    "/patient_services": {
+      "get": {
+        "tags": [
+          "patient_service"
+        ],
+        "summary": "get patient_service list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search patient_service by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "patient_service"
+        ],
+        "summary": "Add a new patient_service",
+        "description": "create patient_service",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "patient_service",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/patient_services/{id}": {
+      "get": {
+        "tags": [
+          "patient_service"
+        ],
+        "summary": "get patient_service by id",
+        "description": "Returns a single patient_service",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of patient_service",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "patient_service not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "patient_service"
+        ],
+        "summary": "update patient_service by id",
+        "description": "update single patient_service",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of patient_service",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "patient_service name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "patient_service not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "patient_service"
+        ],
+        "summary": "Delete a patient_service",
+        "description": "delete patient_service",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid patient_service id"
+          }
+        }
+      }
+    },
+    "/complaints": {
+      "get": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "get complaint list",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "description": "current page, default is 1",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "description": "search complaint by name",
+            "required": false,
+            "type": "string"
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "Add a new complaint",
+        "description": "create complaint",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "complaint",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "create ok"
+          },
+          "400": {
+            "description": "create failed"
+          }
+        }
+      }
+    },
+    "/complaints/{id}": {
+      "get": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "get complaint by id",
+        "description": "Returns a single complaint",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of complaint",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "complaint not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "update complaint by id",
+        "description": "update single complaint",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of complaint",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "name",
+            "in": "body",
+            "description": "complaint name",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful updated",
+            "schema": {
+                "$ref": "#/Role"
+            }
+          },
+          "400": {
+            "description": "Invalid id"
+          },
+          "404": {
+            "description": "complaint not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "complaint"
+        ],
+        "summary": "Delete a complaint",
+        "description": "delete complaint",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid complaint id"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "page": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "Appointment": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "client_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "status": {
+          "type": "string"
+        },
+        "appointment_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "terminal": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "sn": {
+          "type": "string"
+        },
+        "patient_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "terminal_record": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "terminal_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "patient_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "palse_rate": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "temperature": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "guardian": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        },
+        "remark": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "patient": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sex": {
+          "type": "string"
+        },
+        "tel": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "patient_record": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "patient_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "patient_service": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "patient_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "type": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "complaint": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "user_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "client_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+            "type": "integer",
+            "format": "int64"
+        },
+        "role_id": {
+            "type": "integer",
+            "format": "int64"
+        },
+        "login": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string"
+        },
+        "tel": {
+            "type": "string"
+        },
+        "password": {
+            "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Role": {
+      "required": [
+          "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+            "type": "string",
+            "example": "administrators"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
