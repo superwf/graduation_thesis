@@ -1,0 +1,18 @@
+server {
+  listen 80;
+  server_name api.wangfan.com;
+  client_max_body_size 50m;
+  access_log /var/log/nginx/api.log;
+  add_header Access-Control-Allow-Methods 'GET,POST,DELETE,PUT,OPTIONS,HEAD';
+  add_header Allow 'GET,POST,DELETE,PUT,OPTIONS,HEAD';
+
+  root /home/wangfan/xupengpeng/project/public/api;
+  location / {
+    index index.html index.htm;
+    #location /api {
+    if (!-f $request_filename) {
+      proxy_pass http://127.0.0.1:9292;
+      break;
+    }
+  }
+}
